@@ -1,0 +1,82 @@
+:root {
+  --bg: #000;
+  --red: #ff0033;
+  --purple: #9b00ff;
+  --white: #eee;
+}
+
+* {
+  margin:0;
+  box-sizing:border-box;
+  font-family:Segoe UI;
+}
+
+body {
+  background:var(--bg);
+  color:var(--white);
+  overflow:hidden;
+}
+
+canvas#fx {
+  position:fixed;
+  inset:0;
+  z-index:-1;
+}
+
+header {
+  display:flex;
+  align-items:center;
+  padding:12px;
+  backdrop-filter: blur(10px);
+  background:#000c;
+}
+
+.mini-logo {
+  width:42px;
+  margin-right:15px;
+}
+
+nav button {
+  background:none;
+  border:1px solid var(--purple);
+  color:white;
+  padding:8px 14px;
+  margin-right:8px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+nav button:hover {
+  box-shadow:0 0 12px var(--purple);
+}
+
+main {
+  position:relative;
+  height:calc(100vh - 70px);
+}
+
+.tab {
+  position:absolute;
+  inset:0;
+  padding:30px;
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(10px);
+  transition:0.4s ease;
+}
+
+.tab.active {
+  opacity:1;
+  pointer-events:auto;
+  transform:translateY(0);
+}
+
+.logo-container {
+  text-align:center;
+  margin-top:80px;
+}
+
+.big-logo {
+  width:200px;
+  filter:drop-shadow(0 0 20px var(--purple));
+}
