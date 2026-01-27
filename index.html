@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Ordo Realitas</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="fx"></canvas>
+
+<header>
+  <img src="assets/logo/logo.png" class="mini-logo">
+  <nav>
+    <button data-tab="home">Início</button>
+    <button data-tab="agents">Agentes</button>
+    <button data-tab="combat">Combate</button>
+    <button data-tab="scenarios">Cenários</button>
+    <button data-tab="book">Livro</button>
+  </nav>
+</header>
+
+<main>
+
+<section id="home" class="tab active">
+  <div class="logo-container">
+    <img src="assets/logo/logo.png" class="big-logo">
+    <h1>Ordo Realitas</h1>
+  </div>
+</section>
+
+<section id="agents" class="tab"></section>
+<section id="combat" class="tab"></section>
+<section id="scenarios" class="tab"></section>
+<section id="book" class="tab"></section>
+
+<script src="js/storage.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/characters.js"></script>
+<script src="js/dice.js"></script>
+<script src="js/map.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
