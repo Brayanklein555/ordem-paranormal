@@ -7,22 +7,19 @@ const AudioSystem = {
         this.ambient.loop = true;
         this.ambient.volume = 0.4;
         this.click.volume = 0.6;
-        this.dice.volume = 0.7;
+        this.dice.volume = 0.6;
 
-        // desbloqueia áudio após primeira interação
         document.body.addEventListener("click", ()=>{
             this.ambient.play().catch(()=>{});
         }, { once:true });
     },
 
+    setAmbient(v){ this.ambient.volume = v; },
+    setFX(v){ this.click.volume = v; this.dice.volume = v; },
+
     playClick(){
         this.click.currentTime = 0;
         this.click.play();
-    },
-
-    playDice(){
-        this.dice.currentTime = 0;
-        this.dice.play();
     }
 };
 
