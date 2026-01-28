@@ -1,126 +1,125 @@
-const Map = {
-    canvas: document.getElementById("mapCanvas"),
-    ctx:null,
-    bgImage:null,
-    tokens:[],
-    ruler:false,
-    area:false,
-    start:null,
-    savedMaps: JSON.parse(localStorage.getItem("maps")) || [],
+const canvas = document.getElementById("mapCanvas");
+const ctx = canvas.getContext("2d");
 
-    init(){
-        this.ctx = this.canvas.getContext("2d");
-        this.resize();
-        window.onresize = ()=>this.resize();
+canvas.width = 2000;
+canvas.height = 2000;
 
-        this.canvas.onmousedown = e=>{
-            this.start = this.getMouse(e);
-        };
+let bg = null;
+let objects = [];
+let tokens = [];
+let selectedAsset = null;
+let measuring = false;
+let start = null;
 
-        this.canvas.onmouseup = e=>{
-            if(this.ruler || this.area){
-                const end = this.getMouse(e);
-                const dist = Math.hypot(end.x-this.start.x, end.y-this.start.y);
-                const squares = Math.round(dist/60);
-                const meters = Math.round(squares*1.5);
-                alert(this.area 
-                    ? `Área: ${squares*squares} quadrados`
-                    : `Distância: ${squares}q = ${meters}m`);
-            }
-            this.start=null;
-        };
+const GRID = 50;
+const METERS_PER_GRID = 1.5;
 
-        this.loop();
-    },
+const assets = {
+    tree: "assets/map/tree.png",
+    rock: "assets/map/rock.png",
+    house: "assets/map/house.png",
+    monster: "assets/map/monster.png",
+    animal: "assets/map/animal.png",
+    chest: "assets/map/chest.png"
+};
 
-    getMouse(e){
-        const r = this.canvas.getBoundingClientRect();
-        return { x:e.clientX-r.left, y:e.clientY-r.top };
-    },
+// UI palette
+const palette = document.createElement("div");
+palette.className = "palette";
+palette.innerHTML = Object.keys(assets).map(a =>
+    `<button onclick="selectAsset('${a}')">${a}</button>`
+).join("");
+document.body.appendChild(palette);
 
-    toggleRuler(){ this.ruler=!this.ruler; this.area=false; },
-    toggleArea(){ this.area=!this.area; this.ruler=false; },
+function selectAsset(name){
+    selectedAsset = assets[name];
+}
 
-    addToken(){
-        this.tokens.push({
-            x:200, y:200,
-            img: Characters.data.avatar
-        });
-    },
+function drawGrid(){
+    ctx.strokeStyle="#222";
+    for(let x=0;x<canvas.width;x+=GRID){
+        ctx.beginPath();
+        ctx.moveTo(x,0);
+        ctx.lineTo(x,canvas.height);
+        ctx.stroke();
+    }
+    for(let y=0;y<canvas.height;y+=GRID){
+        ctx.beginPath();
+        ctx.moveTo(0,y);
+        ctx.lineTo(canvas.width,y);
+        ctx.stroke();
+    }
+}
 
-    loadImage(e){
-        const img = new Image();
-        img.onload = ()=> this.bgImage = img;
-        img.src = URL.createObjectURL(e.target.files[0]);
-    },
+function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    if(bg) ctx.drawImage(bg,0,0,canvas.width,canvas.height);
+    drawGrid();
 
-    saveMap(){
-        this.savedMaps.push({
-            bg:this.bgImage?.src || null,
-            tokens:this.tokens
-        });
-        localStorage.setItem("maps", JSON.stringify(this.savedMaps));
-        alert("Mapa salvo!");
-    },
+    objects.forEach(o=>{
+        const img=new Image();
+        img.src=o.src;
+        ctx.drawImage(img,o.x,o.y,50,50);
+    });
 
-    loadMap(){
-        if(!this.savedMaps.length) return alert("Nenhum mapa salvo.");
-        const m = this.savedMaps.at(-1);
-        if(m.bg){
-            const img = new Image();
-            img.onload = ()=>this.bgImage=img;
-            img.src = m.bg;
-        }
-        this.tokens = m.tokens;
-    },
+    tokens.forEach(t=>{
+        const img=new Image();
+        img.src=t.img;
+        ctx.drawImage(img,t.x,t.y,50,50);
+    });
+}
 
-    download(){
-        const link = document.createElement("a");
-        link.download="mapa.png";
-        link.href=this.canvas.toDataURL();
-        link.click();
-    },
+canvas.onclick = e => {
+    const r = canvas.getBoundingClientRect();
+    const x = e.clientX - r.left;
+    const y = e.clientY - r.top;
 
-    draw(){
-        this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
-
-        if(this.bgImage){
-            this.ctx.drawImage(this.bgImage,0,0,this.canvas.width,this.canvas.height);
-        }
-
-        // grid
-        for(let x=0;x<this.canvas.width;x+=60){
-            this.ctx.strokeStyle="rgba(255,0,0,0.2)";
-            this.ctx.beginPath();
-            this.ctx.moveTo(x,0);
-            this.ctx.lineTo(x,this.canvas.height);
-            this.ctx.stroke();
-        }
-
-        for(let y=0;y<this.canvas.height;y+=60){
-            this.ctx.beginPath();
-            this.ctx.moveTo(0,y);
-            this.ctx.lineTo(this.canvas.width,y);
-            this.ctx.stroke();
-        }
-
-        // tokens
-        this.tokens.forEach(t=>{
-            if(!t.img) return;
-            const img = new Image();
-            img.src = t.img;
-            this.ctx.drawImage(img,t.x-20,t.y-20,40,40);
-        });
-    },
-
-    loop(){
-        this.draw();
-        requestAnimationFrame(()=>this.loop());
-    },
-
-    resize(){
-        this.canvas.width=this.canvas.clientWidth;
-        this.canvas.height=this.canvas.clientHeight;
+    if(selectedAsset){
+        objects.push({src:selectedAsset,x,y});
+        saveMap();
+        draw();
+    } else {
+        tokens.push({x,y,img:avatarPreview.src});
+        saveMap();
+        draw();
     }
 };
-Map.init();
+
+canvas.onmousedown = e => {
+    measuring = true;
+    start = {x:e.offsetX,y:e.offsetY};
+};
+
+canvas.onmouseup = e => {
+    if(!measuring) return;
+    measuring=false;
+
+    const dx = e.offsetX - start.x;
+    const dy = e.offsetY - start.y;
+    const dist = Math.sqrt(dx*dx + dy*dy);
+    const squares = Math.round(dist / GRID);
+    const meters = (squares * METERS_PER_GRID).toFixed(1);
+
+    alert(`📏 ${squares} quadrados ≈ ${meters} metros`);
+};
+
+function saveMap(){
+    localStorage.setItem("mapData",JSON.stringify({objects,tokens}));
+}
+
+function loadMap(){
+    const d = JSON.parse(localStorage.getItem("mapData")||"{}");
+    objects = d.objects || [];
+    tokens = d.tokens || [];
+}
+
+const Map = {
+    upload(e){
+        const img=new Image();
+        img.onload=()=>{ bg=img; draw(); };
+        img.src = URL.createObjectURL(e.target.files[0]);
+    }
+};
+
+loadMap();
+draw();
