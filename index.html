@@ -4,58 +4,77 @@
 <meta charset="UTF-8">
 <title>Ordo Realitas</title>
 
-<link rel="stylesheet" href="css/style.css">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#000000">
-
+<link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
 <canvas id="fx"></canvas>
 
 <header>
     <img src="assets/logo-small.png" class="logo-small">
+
     <nav>
         <button onclick="UI.show('home')">Início</button>
         <button onclick="UI.show('agents')">Agentes</button>
-        <button onclick="UI.show('combat')">Combate</button>
         <button onclick="UI.show('map')">Cenários</button>
         <button onclick="UI.show('book')">Livro</button>
     </nav>
+
+    <div class="volume-panel">
+        🎵 <input type="range" min="0" max="1" step="0.01" value="0.4" oninput="AudioSystem.setAmbient(this.value)">
+        🔔 <input type="range" min="0" max="1" step="0.01" value="0.6" oninput="AudioSystem.setFX(this.value)">
+    </div>
 </header>
 
 <main>
-    <section id="home" class="page active">
-        <div class="logo-big"></div>
-        <h1>Ordo Realitas</h1>
-        <p>Sistema Paranormal Offline</p>
-    </section>
 
-    <section id="agents" class="page"></section>
+<section id="home" class="page active">
+    <div class="logo-big"></div>
+    <h1>Ordo Realitas</h1>
+</section>
 
-    <section id="combat" class="page">
-        <button onclick="Dice.roll()">🎲 Rolar D20</button>
-    </section>
+<section id="agents" class="page">
+    <h2>Personagem</h2>
+    <div id="character"></div>
+</section>
 
-    <section id="map" class="page">
-        <p>🖱️ Arraste para mover | Scroll para zoom | Segure SHIFT para régua</p>
-        <canvas id="mapCanvas"></canvas>
-    </section>
+<section id="map" class="page">
+    <canvas id="mapCanvas"></canvas>
 
-    <section id="book" class="page">
-        <h2>Livro do Jogador</h2>
-    </section>
+    <div class="map-ui">
+        <button onclick="Map.toggleRuler()">📏 Régua</button>
+        <button onclick="Map.toggleArea()">⭕ Área</button>
+        <button onclick="Map.addToken()">🧍 Token</button>
+        <input type="file" accept="image/*" onchange="Map.loadImage(event)">
+        <button onclick="Map.saveMap()">💾 Salvar</button>
+        <button onclick="Map.loadMap()">📂 Abrir</button>
+        <button onclick="Map.download()">⬇️ Baixar</button>
+    </div>
+</section>
+
+<section id="book" class="page">
+    <h2>📖 Livro do Jogador</h2>
+
+    <div class="pdf-controls">
+        <button onclick="PDF.prev()">⬅</button>
+        <span id="pageInfo">Página 1</span>
+        <button onclick="PDF.next()">➡</button>
+    </div>
+
+    <iframe id="pdfViewer"></iframe>
+</section>
+
 </main>
 
-<script src="js/storage.js"></script>
 <script src="js/audio.js"></script>
 <script src="js/ui.js"></script>
-<script src="js/characters.js"></script>
-<script src="js/dice.js"></script>
-<script src="js/map.js"></script>
-<script src="js/backup.js"></script>
-<script src="js/macros.js"></script>
 <script src="js/fx.js"></script>
+<script src="js/map.js"></script>
+<script src="js/characters.js"></script>
+<script src="js/pdf.js"></script>
 <script src="js/main.js"></script>
 
 </body>
