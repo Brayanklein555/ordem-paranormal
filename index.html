@@ -3,10 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Ordo Realitas</title>
-<link rel="stylesheet" href="css/style.css">
-</head>
 
+<link rel="stylesheet" href="css/style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#000000">
+
+</head>
 <body>
+
+<canvas id="fx"></canvas>
 
 <header>
     <img src="assets/logo-small.png" class="logo-small">
@@ -23,13 +28,20 @@
     <section id="home" class="page active">
         <div class="logo-big"></div>
         <h1>Ordo Realitas</h1>
+        <p>Sistema Paranormal Offline</p>
     </section>
 
     <section id="agents" class="page"></section>
-    <section id="combat" class="page"></section>
+
+    <section id="combat" class="page">
+        <button onclick="Dice.roll()">🎲 Rolar D20</button>
+    </section>
+
     <section id="map" class="page">
+        <p>🖱️ Arraste para mover | Scroll para zoom | Segure SHIFT para régua</p>
         <canvas id="mapCanvas"></canvas>
     </section>
+
     <section id="book" class="page">
         <h2>Livro do Jogador</h2>
     </section>
@@ -43,6 +55,7 @@
 <script src="js/map.js"></script>
 <script src="js/backup.js"></script>
 <script src="js/macros.js"></script>
+<script src="js/fx.js"></script>
 <script src="js/main.js"></script>
 
 </body>
