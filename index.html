@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Ordo Realitas</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header>
+    <img src="assets/logo-small.png" class="logo-small">
+    <nav>
+        <button onclick="UI.show('home')">Início</button>
+        <button onclick="UI.show('agents')">Agentes</button>
+        <button onclick="UI.show('combat')">Combate</button>
+        <button onclick="UI.show('map')">Cenários</button>
+        <button onclick="UI.show('book')">Livro</button>
+    </nav>
+</header>
+
+<main>
+    <section id="home" class="page active">
+        <div class="logo-big"></div>
+        <h1>Ordo Realitas</h1>
+    </section>
+
+    <section id="agents" class="page"></section>
+    <section id="combat" class="page"></section>
+    <section id="map" class="page">
+        <canvas id="mapCanvas"></canvas>
+    </section>
+    <section id="book" class="page">
+        <h2>Livro do Jogador</h2>
+    </section>
+</main>
+
+<script src="js/storage.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/characters.js"></script>
+<script src="js/dice.js"></script>
+<script src="js/map.js"></script>
+<script src="js/backup.js"></script>
+<script src="js/macros.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>
