@@ -69,3 +69,16 @@ canvas {
     height:100%;
     background:#050005;
 }
+.page {
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition: 0.4s ease;
+}
+
+.page.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
