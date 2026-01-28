@@ -1,84 +1,62 @@
-* {
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
-}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Ordo Realitas</title>
 
-body {
-    background:black;
-    color:white;
-    overflow:hidden;
-}
+<link rel="stylesheet" href="css/style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#000000">
 
-header {
-    display:flex;
-    align-items:center;
-    padding:10px;
-    background:#050005;
-    border-bottom:1px solid purple;
-}
+</head>
+<body>
 
-.logo-small {
-    width:40px;
-    border-radius:50%;
-    box-shadow:0 0 10px purple;
-    margin-right:15px;
-}
+<canvas id="fx"></canvas>
 
-nav button {
-    background:none;
-    border:none;
-    color:#ff3cff;
-    font-size:16px;
-    margin-right:15px;
-    cursor:pointer;
-}
+<header>
+    <img src="assets/logo-small.png" class="logo-small">
+    <nav>
+        <button onclick="UI.show('home')">Início</button>
+        <button onclick="UI.show('agents')">Agentes</button>
+        <button onclick="UI.show('combat')">Combate</button>
+        <button onclick="UI.show('map')">Cenários</button>
+        <button onclick="UI.show('book')">Livro</button>
+    </nav>
+</header>
 
-main {
-    height:calc(100vh - 60px);
-}
+<main>
+    <section id="home" class="page active">
+        <div class="logo-big"></div>
+        <h1>Ordo Realitas</h1>
+        <p>Sistema Paranormal Offline</p>
+    </section>
 
-.page {
-    display:none;
-    height:100%;
-    padding:20px;
-    animation: fade 0.4s;
-}
+    <section id="agents" class="page"></section>
 
-.page.active {
-    display:block;
-}
+    <section id="combat" class="page">
+        <button onclick="Dice.roll()">🎲 Rolar D20</button>
+    </section>
 
-@keyframes fade {
-    from { opacity:0; transform:translateY(10px); }
-    to { opacity:1; transform:translateY(0); }
-}
+    <section id="map" class="page">
+        <p>🖱️ Arraste para mover | Scroll para zoom | Segure SHIFT para régua</p>
+        <canvas id="mapCanvas"></canvas>
+    </section>
 
-.logo-big {
-    width:180px;
-    height:180px;
-    border-radius:50%;
-    margin:40px auto;
-    background:url("../assets/logo.png") center/cover;
-    box-shadow:0 0 40px purple;
-}
+    <section id="book" class="page">
+        <h2>Livro do Jogador</h2>
+    </section>
+</main>
 
-canvas {
-    width:100%;
-    height:100%;
-    background:#050005;
-}
-.page {
-    opacity: 0;
-    transform: translateY(10px);
-    pointer-events: none;
-    transition: 0.4s ease;
-}
+<script src="js/storage.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/characters.js"></script>
+<script src="js/dice.js"></script>
+<script src="js/map.js"></script>
+<script src="js/backup.js"></script>
+<script src="js/macros.js"></script>
+<script src="js/fx.js"></script>
+<script src="js/main.js"></script>
 
-.page.active {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-}
-
+</body>
+</html>
