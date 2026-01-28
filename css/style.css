@@ -51,3 +51,32 @@ canvas {
     from { transform:rotateY(0); }
     to { transform:rotateY(360deg); }
 }
+.palette {
+    position:fixed;
+    left:5px;
+    bottom:70px;
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+    z-index:10;
+}
+
+.palette button {
+    background:#2a0038;
+    color:white;
+    border:none;
+    padding:5px;
+    cursor:pointer;
+}
+
+.install-btn {
+    position:fixed;
+    bottom:10px;
+    left:10px;
+    background:#6b008f;
+    color:white;
+    border:none;
+    padding:8px 12px;
+    border-radius:5px;
+    cursor:pointer;
+}
