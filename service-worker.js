@@ -1,20 +1,9 @@
 self.addEventListener("install", e=>{
     e.waitUntil(
-        caches.open("ordo-cache").then(cache=>{
-            return cache.addAll([
-                "./",
-                "./index.html",
-                "./css/style.css",
-                "./js/main.js"
-            ]);
-        })
+        caches.open("ordo").then(c=>c.addAll(["./","./index.html","./css/style.css"]))
     );
 });
 
 self.addEventListener("fetch", e=>{
-    e.respondWith(
-        caches.match(e.request).then(resp=>{
-            return resp || fetch(e.request);
-        })
-    );
+    e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request)));
 });
