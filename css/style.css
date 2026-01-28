@@ -1,62 +1,96 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-<meta charset="UTF-8">
-<title>Ordo Realitas</title>
+* {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
 
-<link rel="stylesheet" href="css/style.css">
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#000000">
+body {
+    background:black;
+    color:white;
+    overflow:hidden;
+}
 
-</head>
-<body>
+#fx {
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+}
 
-<canvas id="fx"></canvas>
+header {
+    display:flex;
+    align-items:center;
+    padding:10px;
+    background:#050005;
+    border-bottom:1px solid purple;
+}
 
-<header>
-    <img src="assets/logo-small.png" class="logo-small">
-    <nav>
-        <button onclick="UI.show('home')">Início</button>
-        <button onclick="UI.show('agents')">Agentes</button>
-        <button onclick="UI.show('combat')">Combate</button>
-        <button onclick="UI.show('map')">Cenários</button>
-        <button onclick="UI.show('book')">Livro</button>
-    </nav>
-</header>
+.logo-small {
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    box-shadow:0 0 12px purple;
+    margin-right:15px;
+}
 
-<main>
-    <section id="home" class="page active">
-        <div class="logo-big"></div>
-        <h1>Ordo Realitas</h1>
-        <p>Sistema Paranormal Offline</p>
-    </section>
+nav button {
+    background:none;
+    border:none;
+    color:#ff3cff;
+    font-size:16px;
+    margin-right:15px;
+    cursor:pointer;
+}
 
-    <section id="agents" class="page"></section>
+main {
+    height:calc(100vh - 60px);
+    position:relative;
+}
 
-    <section id="combat" class="page">
-        <button onclick="Dice.roll()">🎲 Rolar D20</button>
-    </section>
+.page {
+    position:absolute;
+    inset:0;
+    padding:20px;
+    opacity:0;
+    transform: translateY(15px) scale(0.98);
+    pointer-events:none;
+    transition: 0.45s ease;
+}
 
-    <section id="map" class="page">
-        <p>🖱️ Arraste para mover | Scroll para zoom | Segure SHIFT para régua</p>
-        <canvas id="mapCanvas"></canvas>
-    </section>
+.page.active {
+    opacity:1;
+    transform: translateY(0) scale(1);
+    pointer-events:auto;
+}
 
-    <section id="book" class="page">
-        <h2>Livro do Jogador</h2>
-    </section>
-</main>
+.logo-big {
+    width:220px;
+    height:220px;
+    border-radius:50%;
+    margin:40px auto;
+    background:url("../assets/logo.png") center/cover;
+    box-shadow:0 0 60px purple;
+    animation:pulse 3s infinite alternate;
+}
 
-<script src="js/storage.js"></script>
-<script src="js/audio.js"></script>
-<script src="js/ui.js"></script>
-<script src="js/characters.js"></script>
-<script src="js/dice.js"></script>
-<script src="js/map.js"></script>
-<script src="js/backup.js"></script>
-<script src="js/macros.js"></script>
-<script src="js/fx.js"></script>
-<script src="js/main.js"></script>
+@keyframes pulse {
+    from { box-shadow:0 0 20px purple; }
+    to { box-shadow:0 0 70px #ff00ff; }
+}
 
-</body>
-</html>
+canvas {
+    width:100%;
+    height:100%;
+    background:#050005;
+}
+
+.avatar {
+    width:140px;
+    height:140px;
+    border-radius:50%;
+    object-fit:cover;
+    box-shadow:0 0 25px purple;
+    display:block;
+    margin:10px auto;
+}
