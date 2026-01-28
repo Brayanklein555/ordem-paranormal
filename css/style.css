@@ -1,115 +1,53 @@
-* { margin:0; padding:0; box-sizing:border-box; font-family:Arial; }
-
-body { background:black; color:white; overflow:hidden; }
-
-#fx { position:fixed; inset:0; z-index:-1; }
-
-header {
-    display:flex;
-    align-items:center;
-    padding:10px;
-    background:#050005;
-    border-bottom:1px solid purple;
+body {
+    margin:0;
+    background:#050008;
+    color:white;
+    font-family:Arial;
 }
 
-.logo-small {
-    width:42px;
-    border-radius:50%;
-    box-shadow:0 0 15px purple;
-    margin-right:15px;
+header {
+    background:#120018;
+    padding:10px;
+    display:flex;
+    justify-content:space-between;
 }
 
 nav button {
-    background:none;
-    border:none;
-    color:#ff3cff;
-    font-size:16px;
-    margin-right:15px;
-    cursor:pointer;
+    margin:3px;
 }
-
-.volume-panel {
-    margin-left:auto;
-    display:flex;
-    gap:8px;
-}
-
-main { height:calc(100vh - 60px); }
 
 .page {
     display:none;
-    height:100%;
-    padding:20px;
-    opacity:0;
-    transform:translateY(10px);
-    transition:0.4s ease;
+    padding:15px;
 }
 
-.page.active { display:block; opacity:1; transform:none; }
+.page.active {
+    display:block;
+}
 
-.logo-big {
-    width:200px;
-    height:200px;
-    margin:40px auto;
+#diceVisual img {
+    width:120px;
+    animation: spin 1s linear infinite;
+}
+
+canvas {
+    width:100%;
+    height:70vh;
+    background:black;
+}
+
+#avatarPreview {
+    width:150px;
     border-radius:50%;
-    background:url("../assets/logo.png") center/cover;
-    box-shadow:0 0 50px purple;
 }
 
-.avatar {
-    width:140px;
-    height:140px;
-    border-radius:50%;
-    object-fit:cover;
-    box-shadow:0 0 25px purple;
-}
-
-canvas { width:100%; height:100%; }
-
-.map-ui {
-    position:absolute;
-    bottom:15px;
-    left:15px;
-    display:flex;
-    gap:6px;
-}
-
-.map-ui button {
-    background:#220022;
-    color:#ff77ff;
-    border:1px solid purple;
-    padding:6px 10px;
-}
-
-.pdf-controls { display:flex; gap:10px; margin-bottom:10px; }
-
-#pdfViewer { flex:1; width:100%; border:1px solid purple; }
-.palette {
+.audio-controls {
     position:fixed;
-    left:5px;
-    bottom:70px;
-    display:flex;
-    flex-direction:column;
-    gap:5px;
-    z-index:10;
+    bottom:5px;
+    right:5px;
 }
 
-.palette button {
-    background:#2a0038;
-    color:white;
-    border:none;
-    padding:5px;
-    cursor:pointer;
-}
-
-.install-btn {
-    position:fixed;
-    bottom:10px;
-    left:10px;
-    background:#6b008f;
-    color:white;
-    border:none;
-    padding:8px 12px;
-    border-radius:5px;
-    cursor:pointer;
+@keyframes spin {
+    from { transform:rotateY(0); }
+    to { transform:rotateY(360deg); }
 }
